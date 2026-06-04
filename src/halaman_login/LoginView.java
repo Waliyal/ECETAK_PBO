@@ -196,7 +196,7 @@ public class LoginView extends javax.swing.JFrame {
             if (role.equalsIgnoreCase("admin")) {
                 
                 // 3. MEMBUKA MENU UTAMA ADMIN
-                halaman_utama.MenuView mv = new halaman_utama.MenuView();
+                halaman_utama.MenuViewAdmin mv = new halaman_utama.MenuViewAdmin();
                 mv.setTitle("Selamat Datang - " + UN.toUpperCase());
                 mv.setVisible(true);
                 mv.setLocationRelativeTo(null); // Biar halaman muncul di tengah layar

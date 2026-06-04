@@ -2,7 +2,7 @@ package halaman_login; // Sesuaikan dengan nama folder baru Anda tanpa angka
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import halaman_utama.MenuView;
+import halaman_utama.MenuViewAdmin;
 import halaman_utama.MenuController;
 
 public class LoginController {
@@ -47,7 +47,7 @@ public class LoginController {
             
             if (rUser.equals("admin")) {
                 // Membuka halaman utama admin tanpa hambatan eror angka
-                halaman_utama.MenuView menuView = new halaman_utama.MenuView();
+                halaman_utama.MenuViewAdmin menuView = new halaman_utama.MenuViewAdmin();
                 new halaman_utama.MenuController(menuView, uName);
             } else {
                 view.tampilPesan("Akses khusus User disarankan menggunakan platform Website.");
