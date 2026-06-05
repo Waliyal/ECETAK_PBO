@@ -203,7 +203,15 @@ public class LoginView extends javax.swing.JFrame {
                 
                 this.dispose(); // Menutup halaman login
                 
-            } else {
+            }else if (role.equalsIgnoreCase("user")){
+                halaman_utama.MenuViewUsers mv = new halaman_utama.MenuViewUsers();
+                mv.setTitle("Selamat Datang - " + UN.toUpperCase());
+                mv.setVisible(true);
+                mv.setLocationRelativeTo(null); // Biar halaman muncul di tengah layar
+                
+                this.dispose();
+            }
+            else {
                 javax.swing.JOptionPane.showMessageDialog(this, 
                     "Akses ditolak! Aplikasi desktop ini khusus untuk Admin.\nSilakan login melalui Website.", 
                     "AKSES TERBATAS", 
