@@ -4,20 +4,30 @@
  */
 package halaman_utama;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author AsusID
  */
-public class MenuViewAdmin extends javax.swing.JFrame {
 
+
+public class MenuViewAdmin extends javax.swing.JFrame {
+    
     /**
      * Creates new form MenuView
      */
     public MenuViewAdmin() {
         initComponents();
+        this.setLocationRelativeTo(null);
+         muatKatalogProdukDepan(); 
     }
+// Fungsi menyuplai menu item PRODUK ke Controller
+public javax.swing.JMenuItem getMenuProduk() {
+    return itemProdukAdmin; // <--- Ganti 'jMenuItem2' dengan nama variabel asli Menu Item PRODUK Anda!
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,10 +46,11 @@ public class MenuViewAdmin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnKeluar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblKatalogProduk = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         ProdukAdmin = new javax.swing.JMenu();
-        PesananAdmin = new javax.swing.JMenu();
+        itemPesananAdmin = new javax.swing.JMenuItem();
+        itemProdukAdmin = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,8 +77,8 @@ public class MenuViewAdmin extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setBackground(new java.awt.Color(204, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblKatalogProduk.setBackground(new java.awt.Color(204, 255, 255));
+        tblKatalogProduk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -75,47 +86,37 @@ public class MenuViewAdmin extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "", "", "", ""
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblKatalogProduk);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(79, 79, 79))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(192, 192, 192))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(btnKeluar)))
+                .addGap(21, 21, 21)
+                .addComponent(btnKeluar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(144, 144, 144)
                         .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jLabel2))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -123,11 +124,11 @@ public class MenuViewAdmin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,12 +142,27 @@ public class MenuViewAdmin extends javax.swing.JFrame {
         jMenuBar1.setBackground(new java.awt.Color(204, 255, 255));
 
         ProdukAdmin.setBackground(new java.awt.Color(204, 255, 255));
-        ProdukAdmin.setText("PRODUK");
-        jMenuBar1.add(ProdukAdmin);
+        ProdukAdmin.setText("MENU");
 
-        PesananAdmin.setBackground(new java.awt.Color(204, 255, 255));
-        PesananAdmin.setText("PESANAN");
-        jMenuBar1.add(PesananAdmin);
+        itemPesananAdmin.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemPesananAdmin.setText("PESANAN");
+        itemPesananAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPesananAdminActionPerformed(evt);
+            }
+        });
+        ProdukAdmin.add(itemPesananAdmin);
+
+        itemProdukAdmin.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        itemProdukAdmin.setText("PRODUK");
+        itemProdukAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemProdukAdminActionPerformed(evt);
+            }
+        });
+        ProdukAdmin.add(itemProdukAdmin);
+
+        jMenuBar1.add(ProdukAdmin);
 
         setJMenuBar(jMenuBar1);
 
@@ -154,7 +170,7 @@ public class MenuViewAdmin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,6 +191,22 @@ public class MenuViewAdmin extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btnKeluarActionPerformed
+
+    private void itemPesananAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesananAdminActionPerformed
+        // TODO add your handling code here:
+        kelola_pesanan.PesananViewAdmin pa = new kelola_pesanan.PesananViewAdmin();
+        pa.setVisible(true);
+        pa.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_itemPesananAdminActionPerformed
+
+    private void itemProdukAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProdukAdminActionPerformed
+        // TODO add your handling code here:
+        kelola_produk.ProdukViewAdmin pr = new kelola_produk.ProdukViewAdmin();
+        pr.setVisible(true);
+        pr.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_itemProdukAdminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,9 +247,10 @@ public class MenuViewAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu PesananAdmin;
     private javax.swing.JMenu ProdukAdmin;
     private javax.swing.JButton btnKeluar;
+    private javax.swing.JMenuItem itemPesananAdmin;
+    private javax.swing.JMenuItem itemProdukAdmin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -226,6 +259,16 @@ public class MenuViewAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblKatalogProduk;
     // End of variables declaration//GEN-END:variables
+
+    // Fungsi untuk menarik data katalog produk dari MySQL ke halaman depan
+public void muatKatalogProdukDepan() {
+    // Memanggil ProdukModel dari package kelola_produk yang sudah selesai Anda buat kemarin
+    kelola_produk.ProdukModel modelBarang = new kelola_produk.ProdukModel();
+    
+    // Set model tabel utama menggunakan fungsi tampilkanData() milik admin
+    tblKatalogProduk.setModel(modelBarang.tampilkanData());
+}
+
 }

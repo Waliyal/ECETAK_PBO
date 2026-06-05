@@ -7,12 +7,12 @@ package halaman_login;
  *
  * @author AsusID
  */
-import config.koneksi;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+//import config.koneksi;
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import javax.swing.JOptionPane;
 
 
 public class LoginView extends javax.swing.JFrame {
@@ -22,6 +22,7 @@ public class LoginView extends javax.swing.JFrame {
      */
     public LoginView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -119,7 +120,7 @@ public class LoginView extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(back)
@@ -157,10 +158,7 @@ public class LoginView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,64 +171,61 @@ public class LoginView extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:                                    
    
-            try {
-        String UN = username.getText();
-        String PW = password.getText(); // Menggunakan getPassword jika komponennya JPasswordField
+try {
+    String UN = username.getText();
+    String PW = password.getText(); 
+    
+    // RUMUS PERBAIKAN 1: Ambil teks pilihan role dari Combo Box desain Anda
+    // Sesuaikan 'cmbRole' dengan nama variabel JComboBox asli Anda di tab Design
+    String rolePilihan = role.getSelectedItem().toString().toLowerCase(); 
+    
+    // 1. MEMANGGIL KONEKSI DARI FOLDER CONFIG
+    java.sql.Connection conn = config.koneksi.getKoneksi();
+    
+    // RUMUS PERBAIKAN 2: Tambahkan "AND role = ?" agar database mengunci pilihan role Anda!
+    String query = "SELECT * FROM users WHERE username = ? AND password = ? AND role = ?";
+    
+    java.sql.PreparedStatement pst = conn.prepareStatement(query);
+    pst.setString(1, UN);
+    pst.setString(2, PW);
+    pst.setString(3, rolePilihan); // Masukkan variabel role pilihan ke parameter ke-3
+    java.sql.ResultSet rs = pst.executeQuery();
+    
+    if (rs.next()) {
+        // Jika data cocok dengan kombinasi UN, PW, dan ROLE sekaligus
+        String role = rs.getString("role");
         
-        // 1. MEMANGGIL KONEKSI DARI FOLDER CONFIG
-        java.sql.Connection conn = config.koneksi.getKoneksi();
-        
-        // 2. QUERY SQL SESUAI KOLOM DI PHPMYADMIN
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        
-        java.sql.PreparedStatement pst = conn.prepareStatement(query);
-        pst.setString(1, UN);
-        pst.setString(2, PW);
-        java.sql.ResultSet rs = pst.executeQuery();
-        
-        if (rs.next()) {
-            // Mengambil data role dari MySQL
-            String role = rs.getString("role");
+        // 3. MEMBUKA HALAMAN SESUAI HAK AKSES YANG SAH
+        if (role.equalsIgnoreCase("admin")) {
+            halaman_utama.MenuViewAdmin mv = new halaman_utama.MenuViewAdmin();
+            mv.setTitle("Selamat Datang - " + UN.toUpperCase());
+            mv.setVisible(true);
+            mv.setLocationRelativeTo(null); 
+            this.dispose(); 
             
-            // Memastikan hanya ADMIN yang bisa masuk ke aplikasi NetBeans
-            if (role.equalsIgnoreCase("admin")) {
-                
-                // 3. MEMBUKA MENU UTAMA ADMIN
-                halaman_utama.MenuViewAdmin mv = new halaman_utama.MenuViewAdmin();
-                mv.setTitle("Selamat Datang - " + UN.toUpperCase());
-                mv.setVisible(true);
-                mv.setLocationRelativeTo(null); // Biar halaman muncul di tengah layar
-                
-                this.dispose(); // Menutup halaman login
-                
-            }else if (role.equalsIgnoreCase("user")){
-                halaman_utama.MenuViewUsers mv = new halaman_utama.MenuViewUsers();
-                mv.setTitle("Selamat Datang - " + UN.toUpperCase());
-                mv.setVisible(true);
-                mv.setLocationRelativeTo(null); // Biar halaman muncul di tengah layar
-                
-                this.dispose();
-            }
-            else {
-                javax.swing.JOptionPane.showMessageDialog(this, 
-                    "Akses ditolak! Aplikasi desktop ini khusus untuk Admin.\nSilakan login melalui Website.", 
-                    "AKSES TERBATAS", 
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Username atau Password salah!!", 
-                "PERINGATAN!!", 
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else if (role.equalsIgnoreCase("user")) {
+            halaman_utama.MenuViewUsers mv = new halaman_utama.MenuViewUsers();
+            mv.setTitle("Selamat Datang - " + UN.toUpperCase());
+            mv.setVisible(true);
+            mv.setLocationRelativeTo(null); 
+            this.dispose();
         }
-        
-        // 4. MENUTUP RESOURCES
-        rs.close();
-        pst.close();
-        
-    } catch (java.sql.SQLException se) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Gagal memproses data!\n" + se.getMessage());
+    } else {
+        // Jika salah satu dari Kombinasi Username, Password, atau Pilihan Role salah
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Username, Password, atau Pilihan Role salah!!", 
+            "PERINGATAN!!", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
     }
+    
+    // 4. MENUTUP RESOURCES
+    rs.close();
+    pst.close();
+    
+} catch (java.sql.SQLException se) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Gagal memproses data!\n" + se.getMessage());
+}
+
 
     }//GEN-LAST:event_loginActionPerformed
 

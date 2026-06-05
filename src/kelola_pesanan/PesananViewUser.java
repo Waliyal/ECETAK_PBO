@@ -9,15 +9,18 @@ package kelola_pesanan;
  * @author AsusID
  */
 public class PesananViewUser extends javax.swing.JFrame {
-    PesananController tbps;
     /**
      * Creates new form MahasiswaForm
      */
-//     public PesananViewUser() {
-//        initComponents();
+     public PesananViewUser() {
+        initComponents();
+        pack();
+        this.setLocationRelativeTo(null);
+        ambilDataProdukKeCombo(); 
+        isiTabelPesananOtomatis(); 
 //        tbps = new PesananController(this);
 //        tbps.isiTabel();
-//    }
+    }
     //nanti dulu isinya kita sesuaikan dengan databse juga
     /**
      * Creates new form PesananView
@@ -40,14 +43,13 @@ public class PesananViewUser extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        namaPesanan = new javax.swing.JTextField();
-        barangPesanan = new javax.swing.JComboBox<>();
-        jumlahPesanan = new javax.swing.JTextField();
+        txtNamaUser = new javax.swing.JTextField();
+        cmbProduk = new javax.swing.JComboBox<>();
+        txtJumlah = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnBeli = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
+        btnBatal = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPesanan = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
@@ -71,27 +73,35 @@ public class PesananViewUser extends javax.swing.JFrame {
 
         jLabel6.setText("JUMLAH");
 
-        namaPesanan.setBackground(new java.awt.Color(204, 255, 255));
+        txtNamaUser.setBackground(new java.awt.Color(204, 255, 255));
 
-        barangPesanan.setBackground(new java.awt.Color(204, 255, 255));
-        barangPesanan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PENA", "STEPLES", "HVS", "PENSIL", "LAKBAN" }));
+        cmbProduk.setBackground(new java.awt.Color(204, 255, 255));
+        cmbProduk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PENA", "STEPLES", "HVS", "PENSIL", "LAKBAN" }));
 
-        jumlahPesanan.setBackground(new java.awt.Color(204, 255, 255));
+        txtJumlah.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel7.setText("______________________________________________________________________________");
 
-        jButton1.setText("BELI");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBeli.setText("BELI");
+        btnBeli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBeliActionPerformed(evt);
             }
         });
 
-        jButton2.setText("UBAH");
+        btnHapus.setText("HAPUS");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("HAPUS");
-
-        jButton4.setText("BATAL");
+        btnBatal.setText("BATAL");
+        btnBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBatalActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setToolTipText("ID\nNAMA\nBARANG\nJUMLAH\nHARGA");
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,13 +113,13 @@ public class PesananViewUser extends javax.swing.JFrame {
         tblPesanan.setBackground(new java.awt.Color(204, 255, 255));
         tblPesanan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "title 5"
             }
         ));
         tblPesanan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -152,29 +162,28 @@ public class PesananViewUser extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(namaPesanan)
-                            .addComponent(barangPesanan, 0, 198, Short.MAX_VALUE)
-                            .addComponent(jumlahPesanan)))
+                            .addComponent(txtNamaUser)
+                            .addComponent(cmbProduk, 0, 198, Short.MAX_VALUE)
+                            .addComponent(txtJumlah)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnKembali)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)
+                                .addComponent(btnBeli)
+                                .addGap(90, 90, 90)
+                                .addComponent(btnHapus)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel7)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnBatal))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel8)))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,27 +198,26 @@ public class PesananViewUser extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(namaPesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNamaUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(barangPesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbProduk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jumlahPesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
+                    .addComponent(btnBeli)
+                    .addComponent(btnHapus)
+                    .addComponent(btnBatal)
                     .addComponent(btnKembali))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -217,11 +225,13 @@ public class PesananViewUser extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -231,16 +241,45 @@ public class PesananViewUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeliActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+                                               
+    try {
+        String namaUser = txtNamaUser.getText();
+        String produkTerpilih = cmbProduk.getSelectedItem().toString();
+        int jumlah = Integer.parseInt(txtJumlah.getText());
+
+        if (namaUser.trim().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Nama pembeli tidak boleh kosong!");
+            return;
+        }
+
+        kelola_pesanan.PesananModel model = new kelola_pesanan.PesananModel();
+        if (model.tambahPesanan(namaUser, produkTerpilih, jumlah)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Pembelian berhasil diajukan ke admin!");
+            txtJumlah.setText("");
+            isiTabelPesananOtomatis(); // Muat ulang isi tabel transaksi bawah
+        }
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Kolom jumlah harus diisi dengan angka murni!");
+    }
+
+
+    }//GEN-LAST:event_btnBeliActionPerformed
 
     private void tblPesananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPesananMouseClicked
         // TODO add your handling code here:
-        int row = tblPesanan.getSelectedRow();
-//        if(row != -1 ){
-//            tbps.isiField(row);
-//        }
+                                             
+    int baris = tblPesanan.getSelectedRow();
+    if (baris != -1) {
+        // Ambil ID pesanan dari kolom ke-0 (paling kiri)
+        idPesananTerpilih = Integer.parseInt(tblPesanan.getValueAt(baris, 0).toString());
+        txtNamaUser.setText(tblPesanan.getValueAt(baris, 1).toString());
+        cmbProduk.setSelectedItem(tblPesanan.getValueAt(baris, 2).toString());
+        txtJumlah.setText(tblPesanan.getValueAt(baris, 3).toString());
+    }
+
+
     }//GEN-LAST:event_tblPesananMouseClicked
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
@@ -250,6 +289,39 @@ public class PesananViewUser extends javax.swing.JFrame {
         mu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        // TODO add your handling code here:
+                                       
+    if (idPesananTerpilih == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih baris pesanan di tabel terlebih dahulu!");
+        return;
+    }
+    int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(this, "Batalkan pesanan ini?", "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
+    if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+        kelola_pesanan.PesananModel model = new kelola_pesanan.PesananModel();
+        if (model.hapusPesanan(idPesananTerpilih)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Pesanan berhasil dihapus.");
+            txtNamaUser.setText("");
+            txtJumlah.setText("");
+            idPesananTerpilih = -1;
+            isiTabelPesananOtomatis();
+        }
+    }
+
+
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
+        // TODO add your handling code here:
+                                            
+    txtNamaUser.setText("");
+    txtJumlah.setText("");
+    idPesananTerpilih = -1;
+    isiTabelPesananOtomatis();
+
+
+    }//GEN-LAST:event_btnBatalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,12 +362,11 @@ public class PesananViewUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> barangPesanan;
+    private javax.swing.JButton btnBatal;
+    private javax.swing.JButton btnBeli;
+    private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKembali;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> cmbProduk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -306,8 +377,36 @@ public class PesananViewUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jumlahPesanan;
-    private javax.swing.JTextField namaPesanan;
     private javax.swing.JTable tblPesanan;
+    private javax.swing.JTextField txtJumlah;
+    private javax.swing.JTextField txtNamaUser;
     // End of variables declaration//GEN-END:variables
+
+    // Variabel global untuk menampung ID pesanan yang diklik di tabel
+public int idPesananTerpilih = -1;
+
+// 1. Fungsi mengambil data produk dari MySQL untuk diisi ke ComboBox secara otomatis
+public void ambilDataProdukKeCombo() {
+    cmbProduk.removeAllItems(); // Bersihkan item default
+    java.sql.Connection conn = config.koneksi.getKoneksi();
+    String sql = "SELECT nama_produk FROM produk"; // Menarik nama dari tabel produk admin
+    try {
+        java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+        java.sql.ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            cmbProduk.addItem(rs.getString("nama_produk"));
+        }
+        rs.close();
+        ps.close();
+    } catch (java.sql.SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+// 2. Fungsi memuat tabel riwayat transaksi pesanan khusus user
+public void isiTabelPesananOtomatis() {
+    kelola_pesanan.PesananModel modelPesanan = new kelola_pesanan.PesananModel();
+    tblPesanan.setModel(modelPesanan.tampilkanDataPesanan());
+}
+
 }

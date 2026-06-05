@@ -9,12 +9,22 @@ package kelola_pesanan;
  * @author AsusID
  */
 public class PesananViewAdmin extends javax.swing.JFrame {
+    // Variabel penampung ID transaksi yang sedang diklik di tabel
+public int idPesananTerpilih = -1;
+
+// Fungsi menarik data dari database MySQL ke JTable Anda
+public void isiTabelPesananOtomatis() {
+    kelola_pesanan.PesananModel modelPesanan = new kelola_pesanan.PesananModel();
+    tblPesanan.setModel(modelPesanan.tampilkanDataPesanan());
+}
 
     /**
      * Creates new form PesananViewAdmin
      */
     public PesananViewAdmin() {
         initComponents();
+        isiTabelPesananOtomatis();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -29,16 +39,18 @@ public class PesananViewAdmin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPesanan = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        hapusPesanan = new javax.swing.JButton();
+        txtNama = new javax.swing.JTextField();
+        txtBarang = new javax.swing.JTextField();
+        txtJumlah = new javax.swing.JTextField();
+        btnHapus = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         btnKembali = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        cmbStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,8 +61,8 @@ public class PesananViewAdmin extends javax.swing.JFrame {
 
         jScrollPane1.setBackground(new java.awt.Color(204, 255, 255));
 
-        jTable1.setBackground(new java.awt.Color(204, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPesanan.setBackground(new java.awt.Color(204, 255, 255));
+        tblPesanan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,10 +70,15 @@ public class PesananViewAdmin extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "", "", "", ""
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblPesanan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPesananMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblPesanan);
 
         jLabel2.setText("NAMA");
 
@@ -69,13 +86,21 @@ public class PesananViewAdmin extends javax.swing.JFrame {
 
         jLabel5.setText("JUMLAH");
 
-        jTextField1.setBackground(new java.awt.Color(204, 255, 255));
+        txtNama.setEditable(false);
+        txtNama.setBackground(new java.awt.Color(204, 255, 255));
 
-        jTextField2.setBackground(new java.awt.Color(204, 255, 255));
+        txtBarang.setEditable(false);
+        txtBarang.setBackground(new java.awt.Color(204, 255, 255));
 
-        jTextField3.setBackground(new java.awt.Color(204, 255, 255));
+        txtJumlah.setEditable(false);
+        txtJumlah.setBackground(new java.awt.Color(204, 255, 255));
 
-        hapusPesanan.setText("HAPUS");
+        btnHapus.setText("UPDATE STATUS");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Untitled design.png"))); // NOI18N
 
@@ -85,6 +110,11 @@ public class PesananViewAdmin extends javax.swing.JFrame {
                 btnKembaliActionPerformed(evt);
             }
         });
+
+        jLabel6.setText("STATUS");
+
+        cmbStatus.setBackground(new java.awt.Color(204, 255, 255));
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Diproses", "Selesai" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,26 +130,25 @@ public class PesananViewAdmin extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel5))
-                        .addGap(53, 53, 53)
+                            .addComponent(jLabel5)
+                            .addComponent(btnKembali)
+                            .addComponent(jLabel6))
+                        .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                            .addComponent(txtNama)
+                            .addComponent(txtBarang)
+                            .addComponent(txtJumlah, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(btnHapus))
+                            .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(btnKembali)
-                        .addGap(30, 30, 30)
-                        .addComponent(hapusPesanan)))
+                .addGap(35, 35, 35)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
                 .addGap(0, 68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,22 +161,26 @@ public class PesananViewAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel1)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hapusPesanan)
-                    .addComponent(btnKembali))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnKembali)
+                    .addComponent(btnHapus))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,6 +204,58 @@ public class PesananViewAdmin extends javax.swing.JFrame {
         mv.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void tblPesananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPesananMouseClicked
+        // TODO add your handling code here:
+                                       
+    int baris = tblPesanan.getSelectedRow();
+    if (baris != -1) {
+        // Ambil data dari tabel bawah dan pindahkan ke kotak form atas
+        idPesananTerpilih = Integer.parseInt(tblPesanan.getValueAt(baris, 0).toString());
+        txtNama.setText(tblPesanan.getValueAt(baris, 1).toString());
+        txtBarang.setText(tblPesanan.getValueAt(baris, 2).toString());
+        txtJumlah.setText(tblPesanan.getValueAt(baris, 3).toString());
+        
+        String statusDiTabel = tblPesanan.getValueAt(baris, 4).toString();
+        cmbStatus.setSelectedItem(statusDiTabel);
+    }
+
+
+    }//GEN-LAST:event_tblPesananMouseClicked
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        // TODO add your handling code here:
+                                        
+    // 1. Validasi apakah admin sudah mengklik baris data di tabel atau belum
+    if (idPesananTerpilih == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Silakan pilih baris pesanan di tabel terlebih dahulu!");
+        return;
+    }
+    
+    // 2. Ambil teks status terbaru yang dipilih admin di Combo Box (pending/diproses/selesai)
+    String statusBaru = cmbStatus.getSelectedItem().toString();
+    
+    // 3. Panggil PesananModel untuk mengeksekusi query UPDATE ke MySQL
+    kelola_pesanan.PesananModel model = new kelola_pesanan.PesananModel();
+    
+    if (model.updateStatusPesanan(idPesananTerpilih, statusBaru)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Status pesanan berhasil diperbarui menjadi: " + statusBaru.toUpperCase());
+        
+        // 4. Bersihkan form inputan setelah berhasil diubah
+        txtNama.setText("");
+        txtBarang.setText("");
+        txtJumlah.setText("");
+        idPesananTerpilih = -1; // Reset ID pilihan
+        
+        // 5. Segarkan tabel bawah agar status terbarunya langsung muncul di layar
+        isiTabelPesananOtomatis(); 
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Gagal memperbarui status ke database.");
+    }
+
+
+
+    }//GEN-LAST:event_btnHapusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,18 +293,20 @@ public class PesananViewAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKembali;
-    private javax.swing.JButton hapusPesanan;
+    private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable tblPesanan;
+    private javax.swing.JTextField txtBarang;
+    private javax.swing.JTextField txtJumlah;
+    private javax.swing.JTextField txtNama;
     // End of variables declaration//GEN-END:variables
 }
